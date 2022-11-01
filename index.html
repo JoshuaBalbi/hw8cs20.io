@@ -1,0 +1,93 @@
+<html>
+<head>
+  <title>hw8API</title>
+<style>
+
+
+    body {background-color: powderblue;}
+
+
+</style>
+</head>
+
+<body>
+
+<script>
+
+const data = null;
+const xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
+xhr.addEventListener("readystatechange", function () {
+	if (this.readyState === this.DONE) {
+        document.getElementById('drop').innerHTML = makedrop('dropdown',  JSON.parse(this.responseText));
+		//document.getElementById("drop").innerHTML = JSON.parse(this.responseText);
+	}
+});
+
+xhr.open("GET", "https://matchilling-chuck-norris-jokes-v1.p.rapidapi.com/jokes/categories");
+xhr.setRequestHeader("accept", "application/json");
+xhr.setRequestHeader("X-RapidAPI-Key", "c5fb66e554mshfdca6511e11a563p15556cjsn92db76798b8e");
+xhr.setRequestHeader("X-RapidAPI-Host", "matchilling-chuck-norris-jokes-v1.p.rapidapi.com");
+xhr.send(data);
+
+
+
+function makedrop(name, data)
+{
+   var t= "chooose a Type of joke: ";
+   t += "<select name='" + name + "' >";
+   t += "<option>random</option>";
+   for (i = 0; i< data.length; i++){
+        if (data[i] != "explicit"){
+            t += "<option>" + data[i] + "</option>";
+        }
+    }
+   t+= "</select>";
+   return t;
+}
+
+
+function displayed(){
+    val = (document.getElementsByName('dropdown')[0].value);
+    const ckh = new XMLHttpRequest();
+    const data = null;
+    ckh.withCredentials = true;
+    ckh.addEventListener("readystatechange", function () {
+    	if (this.readyState === this.DONE) {
+            if(val == "random"){
+                document.getElementById('choice').innerHTML = JSON.parse(this.responseText).value;
+            }
+            else{
+                i = Math.floor(Math.random() * (JSON.parse(this.responseText).total));
+                document.getElementById('choice').innerHTML = JSON.parse(this.responseText).result[i].value;
+            }
+    	}
+    });
+    if (val == "random"){
+        ckh.open("GET", "https://matchilling-chuck-norris-jokes-v1.p.rapidapi.com/jokes/" + val);
+    }
+    else{
+        ckh.open("GET", "https://matchilling-chuck-norris-jokes-v1.p.rapidapi.com/jokes/search?query=" + val);
+    }
+    ckh.setRequestHeader("accept", "application/json");
+    ckh.setRequestHeader("X-RapidAPI-Key", "c5fb66e554mshfdca6511e11a563p15556cjsn92db76798b8e");
+    ckh.setRequestHeader("X-RapidAPI-Host", "matchilling-chuck-norris-jokes-v1.p.rapidapi.com");
+    ckh.send(data);
+
+}
+</script>
+
+<h1>Chuck Norris Joke's</h1>
+<h2>AJAX Way</h2>
+
+<a class="page" href=./fetch.html>Fetch Way</a>
+
+<br/>
+<br/>
+<br/>
+<div id = "drop" onchange = displayed()>
+</div>
+<br/>
+<div id = "choice">
+</div>
+</body>

@@ -1,0 +1,100 @@
+<html>
+<head>
+  <title>hw8API</title>
+
+  <style>
+
+
+    body {background-color: powderblue;}
+
+
+  </style>
+</head>
+
+
+<body>
+
+
+
+<script>
+
+const options = {
+	method: 'GET',
+	headers: {
+		accept: 'application/json',
+		'X-RapidAPI-Key': 'c5fb66e554mshfdca6511e11a563p15556cjsn92db76798b8e',
+		'X-RapidAPI-Host': 'matchilling-chuck-norris-jokes-v1.p.rapidapi.com'
+	}
+};
+
+
+fetch("https://matchilling-chuck-norris-jokes-v1.p.rapidapi.com/jokes/categories",options).then(
+res => {
+    res.json().then(
+    data => {
+                document.getElementById('drop').innerHTML = makedrop("dropdown", data);
+            }
+        )
+        }
+)
+
+
+
+function makedrop(name, data)
+{
+   var t= "chooose a Type of joke: ";
+   t += "<select name='" + name + "' >";
+   t += "<option>random</option>";
+   for (i = 0; i< data.length; i++){
+        if (data[i] != "explicit"){
+            t += "<option>" + data[i] + "</option>";
+        }
+    }
+   t+= "</select>";
+   return t;
+}
+
+
+function displayed(){
+    val = (document.getElementsByName('dropdown')[0].value);
+    if (val == "random"){
+        fetch('https://matchilling-chuck-norris-jokes-v1.p.rapidapi.com/jokes/random', options).then(
+            res => {
+                res.json().then(
+                res => {
+                            document.getElementById('choice').innerHTML = res.value;
+                        }
+                    )
+                    }
+            )
+    }
+    else{
+        fetch("https://matchilling-chuck-norris-jokes-v1.p.rapidapi.com/jokes/search?query=" + val, options).then(
+        res => {
+            res.json().then(
+            res => {
+                        i = Math.floor(Math.random() * res.total);
+                        document.getElementById('choice').innerHTML = res.result[i].value;
+                   }
+                )
+                }
+        )
+    }
+}
+
+
+
+</script>
+<h1>Chuck Norris Joke's</h1>
+<h2>Fetch way</h2>
+<a class="page" href=./index.html>AJAX Way</a>
+<br/>
+<br/>
+<div id = "drop" onchange = displayed()>
+</div>
+
+<br/>
+
+<div id = "choice">
+</div>
+</body>
