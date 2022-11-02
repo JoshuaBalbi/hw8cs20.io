@@ -15,20 +15,20 @@
 <script>
 
 const data = null;
-const xhr = new XMLHttpRequest();
-xhr.withCredentials = true;
-xhr.addEventListener("readystatechange", function () {
+const req = new XMLHttpRequest();
+req.withCredentials = true;
+req.addEventListener("readystatechange", function () {
 	if (this.readyState === this.DONE) {
         document.getElementById('drop').innerHTML = makedrop('dropdown',  JSON.parse(this.responseText));
 		//document.getElementById("drop").innerHTML = JSON.parse(this.responseText);
 	}
 });
 
-xhr.open("GET", "https://matchilling-chuck-norris-jokes-v1.p.rapidapi.com/jokes/categories");
-xhr.setRequestHeader("accept", "application/json");
-xhr.setRequestHeader("X-RapidAPI-Key", "c5fb66e554mshfdca6511e11a563p15556cjsn92db76798b8e");
-xhr.setRequestHeader("X-RapidAPI-Host", "matchilling-chuck-norris-jokes-v1.p.rapidapi.com");
-xhr.send(data);
+req.open("GET", "https://matchilling-chuck-norris-jokes-v1.p.rapidapi.com/jokes/categories");
+req.setRequestHeader("accept", "application/json");
+req.setRequestHeader("X-RapidAPI-Key", "c5fb66e554mshfdca6511e11a563p15556cjsn92db76798b8e");
+req.setRequestHeader("X-RapidAPI-Host", "matchilling-chuck-norris-jokes-v1.p.rapidapi.com");
+req.send(data);
 
 
 
@@ -49,10 +49,10 @@ function makedrop(name, data)
 
 function displayed(){
     val = (document.getElementsByName('dropdown')[0].value);
-    const ckh = new XMLHttpRequest();
+    const reques = new XMLHttpRequest();
     const data = null;
-    ckh.withCredentials = true;
-    ckh.addEventListener("readystatechange", function () {
+    reques.withCredentials = true;
+    reques.addEventListener("readystatechange", function () {
     	if (this.readyState === this.DONE) {
             if(val == "random"){
                 document.getElementById('choice').innerHTML = JSON.parse(this.responseText).value;
@@ -64,15 +64,15 @@ function displayed(){
     	}
     });
     if (val == "random"){
-        ckh.open("GET", "https://matchilling-chuck-norris-jokes-v1.p.rapidapi.com/jokes/" + val);
+        reques.open("GET", "https://matchilling-chuck-norris-jokes-v1.p.rapidapi.com/jokes/" + val);
     }
     else{
-        ckh.open("GET", "https://matchilling-chuck-norris-jokes-v1.p.rapidapi.com/jokes/search?query=" + val);
+        reques.open("GET", "https://matchilling-chuck-norris-jokes-v1.p.rapidapi.com/jokes/search?query=" + val);
     }
-    ckh.setRequestHeader("accept", "application/json");
-    ckh.setRequestHeader("X-RapidAPI-Key", "c5fb66e554mshfdca6511e11a563p15556cjsn92db76798b8e");
-    ckh.setRequestHeader("X-RapidAPI-Host", "matchilling-chuck-norris-jokes-v1.p.rapidapi.com");
-    ckh.send(data);
+    reques.setRequestHeader("accept", "application/json");
+    reques.setRequestHeader("X-RapidAPI-Key", "c5fb66e554mshfdca6511e11a563p15556cjsn92db76798b8e");
+    reques.setRequestHeader("X-RapidAPI-Host", "matchilling-chuck-norris-jokes-v1.p.rapidapi.com");
+    reques.send(data);
 
 }
 </script>
@@ -82,9 +82,12 @@ function displayed(){
 
 <a class="page" href=./fetch.html>Fetch Way</a>
 
-<br/>
-<br/>
-<br/>
+<div class = "explain">
+<p>Description: This api attains a random chuck norris joke that makes people laugh</p>
+<p>Website: rapidapi.com </p>
+<p>AJAX: I used AJAX'S htmlrequest() option to request and send a get request that gets me the following information required: a random joke, a certain type of joke, and the categories that each joke has.</p>
+<p>Helpfulness: This api can bring people joy in a time of need. It also could be helpful to attain a quick joke that could help seomone attain a job in a job interview</p>
+</div>
 <div id = "drop" onchange = displayed()>
 </div>
 <br/>
